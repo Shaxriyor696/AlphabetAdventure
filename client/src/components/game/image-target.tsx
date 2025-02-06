@@ -40,19 +40,19 @@ export function ImageTarget({ item, onCorrectDrop }: ImageTargetProps) {
   return (
     <Card
       ref={drop}
-      className={`relative w-48 h-48 flex flex-col items-center justify-center p-4
+      className={`relative w-32 h-36 flex flex-col items-center justify-center p-2
         ${isOver && canDrop ? 'ring-4 ring-green-500' : ''}
         ${isOver && !canDrop ? 'ring-4 ring-red-500' : ''}
         hover:shadow-lg transition-shadow`}
     >
-      <div className="w-full h-32 mb-2 overflow-hidden rounded-lg">
+      <div className="w-full h-24 mb-1 overflow-hidden rounded-lg">
         <img 
           src={item.image} 
           alt={item.word}
           className="w-full h-full object-cover"
         />
       </div>
-      <p className="text-lg font-semibold text-center">{item.word}</p>
+      <p className="text-sm font-semibold text-center">{item.word}</p>
     </Card>
   );
 }

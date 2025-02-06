@@ -17,7 +17,7 @@ export function LetterCard({ letter }: LetterCardProps) {
   return (
     <Card
       ref={drag}
-      className={`w-24 h-24 flex items-center justify-center text-5xl font-bold cursor-move
+      className={`w-16 h-16 flex items-center justify-center text-3xl font-bold cursor-move
         ${isDragging ? 'opacity-50' : 'opacity-100'}
         bg-gradient-to-br from-primary-500 to-primary-600 text-white
         hover:scale-105 transition-transform`}

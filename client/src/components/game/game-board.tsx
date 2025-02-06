@@ -17,7 +17,7 @@ export function GameBoard() {
   const startIdx = currentPage * ITEMS_PER_PAGE;
   const currentItems = alphabetData.slice(startIdx, startIdx + ITEMS_PER_PAGE);
   const totalPages = Math.ceil(alphabetData.length / ITEMS_PER_PAGE);
-  
+
   const handleCorrectDrop = (letter: string) => {
     setCompletedLetters(prev => new Set([...prev, letter]));
   };
@@ -26,51 +26,51 @@ export function GameBoard() {
 
   return (
     <DndProvider backend={isMobile ? TouchBackend : HTML5Backend}>
-      <div className="p-6 max-w-4xl mx-auto">
-        <div className="mb-8">
-          <h1 className="text-4xl font-bold text-center mb-4 bg-gradient-to-r from-primary to-purple-600 text-transparent bg-clip-text">
+      <div className="p-4 max-w-md mx-auto">
+        <div className="mb-4">
+          <h1 className="text-2xl font-bold text-center mb-2 bg-gradient-to-r from-primary to-purple-600 text-transparent bg-clip-text">
             Alphabet Learning Game
           </h1>
-          <Progress value={progress} className="w-full h-4" />
+          <Progress value={progress} className="w-full h-3" />
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-          <div className="flex flex-wrap gap-4 justify-center">
-            {currentItems.map((item) => (
-              <LetterCard
-                key={item.letter}
-                letter={item.letter}
-              />
-            ))}
-          </div>
-          
-          <div className="flex flex-wrap gap-4 justify-center">
-            {currentItems.map((item) => (
+        <div className="grid grid-cols-2 gap-3 mb-4">
+          {currentItems.map((item) => (
+            <div key={item.letter} className="flex justify-center">
+              <LetterCard letter={item.letter} />
+            </div>
+          ))}
+        </div>
+
+        <div className="grid grid-cols-2 gap-3 mb-4">
+          {currentItems.map((item) => (
+            <div key={item.letter} className="flex justify-center">
               <ImageTarget
-                key={item.letter}
                 item={item}
                 onCorrectDrop={handleCorrectDrop}
               />
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
 
-        <div className="flex justify-center gap-4">
+        <div className="flex justify-center gap-2">
           <Button
             onClick={() => setCurrentPage(p => Math.max(0, p - 1))}
             disabled={currentPage === 0}
             variant="outline"
+            size="sm"
           >
-            <ChevronLeft className="h-4 w-4 mr-2" />
-            Previous
+            <ChevronLeft className="h-4 w-4 mr-1" />
+            Prev
           </Button>
           <Button
             onClick={() => setCurrentPage(p => Math.min(totalPages - 1, p + 1))}
             disabled={currentPage === totalPages - 1}
             variant="outline"
+            size="sm"
           >
             Next
-            <ChevronRight className="h-4 w-4 ml-2" />
+            <ChevronRight className="h-4 w-4 ml-1" />
           </Button>
         </div>
       </div>
