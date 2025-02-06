@@ -37,7 +37,10 @@ export function GameBoard() {
         <div className="grid grid-cols-2 gap-3 mb-4">
           {currentItems.map((item) => (
             <div key={item.letter} className="flex justify-center">
-              <LetterCard letter={item.letter} />
+              <LetterCard 
+                letter={item.letter}
+                isCompleted={completedLetters.has(item.letter)}
+              />
             </div>
           ))}
         </div>
@@ -48,6 +51,7 @@ export function GameBoard() {
               <ImageTarget
                 item={item}
                 onCorrectDrop={handleCorrectDrop}
+                isCompleted={completedLetters.has(item.letter)}
               />
             </div>
           ))}
