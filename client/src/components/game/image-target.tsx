@@ -1,6 +1,6 @@
 import { useDrop } from 'react-dnd';
 import { Card } from "@/components/ui/card";
-import { correctSound, incorrectSound } from '@/lib/game-data';
+import { useToast } from "@/hooks/use-toast";
 import type { AlphabetItem } from '@/lib/game-data';
 
 interface ImageTargetProps {
@@ -9,14 +9,25 @@ interface ImageTargetProps {
 }
 
 export function ImageTarget({ item, onCorrectDrop }: ImageTargetProps) {
+  const { toast } = useToast();
+
   const [{ isOver, canDrop }, drop] = useDrop(() => ({
     accept: 'letter',
     drop: (draggedItem: { letter: string }) => {
       if (draggedItem.letter === item.letter) {
-        correctSound.play();
+        toast({
+          title: "Correct!",
+          description: `'${item.letter}' matches with ${item.word}!`,
+          variant: "default",
+          className: "bg-green-500 text-white",
+        });
         onCorrectDrop(item.letter);
       } else {
-        incorrectSound.play();
+        toast({
+          title: "Try Again!",
+          description: "That's not the right match. Keep trying!",
+          variant: "destructive",
+        });
       }
     },
     canDrop: (draggedItem: { letter: string }) => draggedItem.letter === item.letter,
