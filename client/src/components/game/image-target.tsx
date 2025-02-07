@@ -7,10 +7,11 @@ import type { AlphabetItem } from '@/lib/game-data';
 interface ImageTargetProps {
   item: AlphabetItem;
   onCorrectDrop: (letter: string) => void;
+  onIncorrectDrop: () => void;
   isCompleted: boolean;
 }
 
-export function ImageTarget({ item, onCorrectDrop, isCompleted }: ImageTargetProps) {
+export function ImageTarget({ item, onCorrectDrop, onIncorrectDrop, isCompleted }: ImageTargetProps) {
   const { toast } = useToast();
 
   const [{ isOver, canDrop }, drop] = useDrop(() => ({
@@ -30,6 +31,7 @@ export function ImageTarget({ item, onCorrectDrop, isCompleted }: ImageTargetPro
           description: "That's not the right match. Keep trying!",
           variant: "destructive",
         });
+        onIncorrectDrop();
       }
     },
     canDrop: (draggedItem: { letter: string }) => !isCompleted && draggedItem.letter === item.letter,
@@ -42,7 +44,7 @@ export function ImageTarget({ item, onCorrectDrop, isCompleted }: ImageTargetPro
   return (
     <Card
       ref={drop}
-      className={`relative w-32 h-36 flex flex-col items-center justify-center p-2
+      className={`relative w-32 h-36 flex flex-col items-center justify-center p-2 bg-white/90
         ${isOver && canDrop ? 'ring-4 ring-green-500 scale-105' : ''}
         ${isOver && !canDrop ? 'ring-4 ring-red-500' : ''}
         ${isCompleted ? 'opacity-75' : ''}
