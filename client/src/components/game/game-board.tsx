@@ -35,32 +35,30 @@ export function GameBoard() {
   return (
     <DndProvider backend={isMobile ? TouchBackend : HTML5Backend}>
       <div className="min-h-screen bg-gradient-to-b from-emerald-100 to-emerald-200 p-4">
-        <div className="max-w-md mx-auto">
+        <div className="max-w-4xl mx-auto">
           <div className="flex justify-center mb-6">
             <Mascot state={mascotState} />
           </div>
 
-          <div className="grid grid-cols-2 gap-3 mb-4">
+          <div className="flex justify-center gap-4 mb-6">
             {currentItems.map((item) => (
-              <div key={item.letter} className="flex justify-center">
-                <LetterCard 
-                  letter={item.letter}
-                  isCompleted={completedLetters.has(item.letter)}
-                />
-              </div>
+              <LetterCard 
+                key={item.letter}
+                letter={item.letter}
+                isCompleted={completedLetters.has(item.letter)}
+              />
             ))}
           </div>
 
-          <div className="grid grid-cols-2 gap-3 mb-4">
+          <div className="flex justify-center gap-4 mb-6">
             {currentItems.map((item) => (
-              <div key={item.letter} className="flex justify-center">
-                <ImageTarget
-                  item={item}
-                  onCorrectDrop={handleCorrectDrop}
-                  onIncorrectDrop={handleIncorrectDrop}
-                  isCompleted={completedLetters.has(item.letter)}
-                />
-              </div>
+              <ImageTarget
+                key={item.letter}
+                item={item}
+                onCorrectDrop={handleCorrectDrop}
+                onIncorrectDrop={handleIncorrectDrop}
+                isCompleted={completedLetters.has(item.letter)}
+              />
             ))}
           </div>
 

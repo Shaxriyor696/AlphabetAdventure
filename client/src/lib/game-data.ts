@@ -33,4 +33,4 @@ export const alphabetData: AlphabetItem[] = [
   { letter: "Z", word: "Zebra", image: "https://images.unsplash.com/photo-1526095484803-6a3665c797a5" }
 ];
 
-export const ITEMS_PER_PAGE = 4;
+export const ITEMS_PER_PAGE = 3;
