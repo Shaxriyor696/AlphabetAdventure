@@ -17,14 +17,14 @@ export function Mascot({ state }: MascotProps) {
   return (
     <div className="relative">
       <img 
-        src="/mascot/crocodile.png" 
-        alt="Friendly Crocodile"
-        className={`w-32 h-32 ${animation}`}
+        src="/images/mascot/ibratjon.jpg" 
+        alt="Friendly ibratjon"
+        className={`w-40 h-25`}
       />
-      <div className="absolute -bottom-4 right-0 transform translate-x-1/2">
-        <div className="bg-wood rounded-lg shadow-lg p-3 relative border-2 border-brown-600 min-w-[120px]">
+      <div className="absolute -bottom-8 right-6 transform translate-x-2/3">
+        <div className="bg-wood rounded-lg shadow-lg p-2 relative border-4 border-brown-600 min-w-[250px]">
           {state === 'neutral' && (
-            <p className="text-sm font-semibold text-brown-800">To'g'ri topdiniz!</p>
+            <p className="text-sm font-semibold text-brown-700">To'g'ri topishga harakat qiling!</p>
           )}
           {state === 'correct' && (
             <div className="flex items-center gap-1 text-green-600">

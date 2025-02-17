@@ -1,70 +1,86 @@
 import { useDrop } from 'react-dnd';
-import { Card } from "@/components/ui/card";
-import { useToast } from "@/hooks/use-toast";
-import { Check } from 'lucide-react';
-import type { AlphabetItem } from '@/lib/game-data';
+import { cn } from '@/lib/utils';
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface ImageTargetProps {
-  item: AlphabetItem;
+  item: {
+    letter: string;
+    word: string;
+    image: string;
+  };
   onCorrectDrop: (letter: string) => void;
   onIncorrectDrop: () => void;
   isCompleted: boolean;
 }
 
 export function ImageTarget({ item, onCorrectDrop, onIncorrectDrop, isCompleted }: ImageTargetProps) {
-  const { toast } = useToast();
+  const [isEnlarged, setIsEnlarged] = useState(false);
 
-  const [{ isOver, canDrop }, drop] = useDrop(() => ({
+  const [{ isOver }, drop] = useDrop(() => ({
     accept: 'letter',
     drop: (draggedItem: { letter: string }) => {
       if (draggedItem.letter === item.letter) {
-        toast({
-          title: "Correct!",
-          description: `'${item.letter}' matches with ${item.word}!`,
-          variant: "default",
-          className: "bg-green-500 text-white",
-        });
         onCorrectDrop(item.letter);
+        setIsEnlarged(true);
+        setTimeout(() => setIsEnlarged(false), 3000);
       } else {
-        toast({
-          title: "Try Again!",
-          description: "That's not the right match. Keep trying!",
-          variant: "destructive",
-        });
         onIncorrectDrop();
       }
     },
-    canDrop: (draggedItem: { letter: string }) => !isCompleted && draggedItem.letter === item.letter,
     collect: (monitor) => ({
       isOver: monitor.isOver(),
-      canDrop: monitor.canDrop(),
     }),
   }));
 
+  const handleClick = () => {
+    if (isCompleted) {
+      setIsEnlarged(!isEnlarged);
+    }
+  };
+
   return (
-    <Card
-      ref={drop}
-      className={`relative w-32 h-36 flex flex-col items-center justify-center p-2 bg-white/90
-        ${isOver && canDrop ? 'ring-4 ring-green-500 scale-105' : ''}
-        ${isOver && !canDrop ? 'ring-4 ring-red-500' : ''}
-        ${isCompleted ? 'opacity-75' : ''}
-        transition-all duration-200 ease-in-out
-        hover:shadow-lg`}
-    >
-      <div className="w-full h-24 mb-1 overflow-hidden rounded-lg relative">
-        <img 
-          src={item.image} 
-          alt={item.word}
-          className={`w-full h-full object-cover transition-transform duration-200
-            ${isCompleted ? 'scale-95 blur-sm' : ''}`}
-        />
-        {isCompleted && (
-          <div className="absolute inset-0 flex items-center justify-center bg-green-500/30">
-            <Check className="w-8 h-8 text-white" />
-          </div>
+    <>
+      <div
+        ref={drop}
+        className={cn(
+          "relative rounded-lg overflow-hidden cursor-pointer transition-all duration-200",
+          isOver && "ring-2 ring-emerald-400",
+          isCompleted && "ring-2 ring-emerald-500"
         )}
+        onClick={handleClick}
+      >
+        <img
+          src={item.image}
+          alt={item.word}
+          className="w-32 h-32 object-cover rounded-lg"
+        />
+        <p className="text-center mt-2 mb-2 font-bold text-2xl">{item.word}</p>
       </div>
-      <p className="text-sm font-semibold text-center">{item.word}</p>
-    </Card>
+
+      <AnimatePresence>
+        {isEnlarged && isCompleted && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.5 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.5 }}
+            className="fixed inset-0 bg-yellow-500 bg-opacity-50 flex items-center justify-center z-50"
+            onClick={() => setIsEnlarged(false)}
+          >
+            <motion.div
+              className="bg-white p-2 rounded-xl max-w-2xl"
+              onClick={e => e.stopPropagation()}
+            >
+              <img
+                src={item.image}
+                alt={item.word}
+                className="w-full max-h-[70vh] object-contain rounded-lg"
+              />
+              <p className="text-center mt-2 mb-2 text-4xl font-bold">{item.word}</p>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   );
 }

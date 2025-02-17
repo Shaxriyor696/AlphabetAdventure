@@ -22,11 +22,12 @@ export function LetterCard({ letter, isCompleted }: LetterCardProps) {
   return (
     <Card
       ref={drag}
-      className={`w-16 h-16 flex items-center justify-center text-3xl font-bold cursor-move
+      className={`w-20 h-20 flex items-center justify-center text-3xl font-bold cursor-move
         ${isDragging ? 'opacity-30 scale-110' : 'opacity-100'}
-        bg-gradient-to-br from-primary-500 to-primary-600 text-white
+        bg-white text-emerald-700
+        shadow-md
         transform transition-all duration-200 ease-in-out
-        hover:scale-105 active:scale-95`}
+        hover:scale-105 hover:bg-emerald-50 active:scale-95`}
     >
       {letter}
     </Card>
