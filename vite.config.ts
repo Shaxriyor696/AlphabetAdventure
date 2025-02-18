@@ -10,7 +10,7 @@ const __dirname = dirname(__filename);
 
 export default defineConfig({
   plugins: [react(), runtimeErrorOverlay(), themePlugin()],
-  base: "https://shaxriyor696.github.io/AlphabetAdventure/",
+  base: "/AlphabetAdventure/",
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "client", "src"),
