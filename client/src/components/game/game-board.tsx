@@ -23,6 +23,7 @@ export function GameBoard() {
   const [showTimeUpMessage, setShowTimeUpMessage] = useState(false);
   const timerRef = useRef<NodeJS.Timeout>();
   const [showWordGame, setShowWordGame] = useState(false);
+  const [showCompletionMessage, setShowCompletionMessage] = useState(false);
 
   useEffect(() => {
     audioRef.current = new Audio('/audio/alphabet.mp3');
@@ -114,25 +115,50 @@ export function GameBoard() {
     if (completedCurrentItems && isTimerActive) {
       setIsTimerActive(false);
       clearInterval(timerRef.current);
-      // Auto-advance to next page after a short delay
-      setTimeout(() => {
-        if (currentPage < totalPages - 1) {
-          setCurrentPage(p => p + 1);
-        }
-      }, 1500);
+
+      // For the last page (Zebra)
+      if (currentPage === totalPages - 1) {
+        // Wait for the zebra image display (5 seconds) plus a short delay
+        setTimeout(() => {
+          setShowCompletionMessage(true);
+          // Auto-hide completion message after 8 seconds
+          setTimeout(() => {
+            setShowCompletionMessage(false);
+            setShowWordGame(true);
+          }, 8000);
+        }, 6000);  // Increased delay after zebra image
+      } else {
+        // For other pages, advance as normal
+        setTimeout(() => {
+          if (currentPage < totalPages - 1) {
+            setCurrentPage(p => p + 1);
+          }
+        }, 5000);
+      }
     }
-  }, [completedLetters, currentItems]);
+  }, [completedLetters, currentItems, currentPage, totalPages]);
 
   useEffect(() => {
     if (isGameComplete) {
+      setShowCompletionMessage(true);
+      // Auto-hide after 8 seconds
       setTimeout(() => {
-        setShowWordGame(true);
-      }, 3000);
+        setShowCompletionMessage(false);
+        setShowWordGame(true);  // Automatically move to word game
+      }, 9000);
     }
   }, [isGameComplete]);
 
   const handleSkipToWords = () => {
     setShowWordGame(true);
+  };
+
+  const handleRestartGame = () => {
+    setCompletedLetters(new Set());
+    setScore(0);
+    setCurrentPage(0);
+    setTimeLeft(25);
+    setIsTimerActive(true);
   };
 
   if (showWordGame) {
@@ -171,7 +197,7 @@ export function GameBoard() {
 
             {/* Timer Circle */}
             <div className="relative w-32 h-32 flex items-center justify-center">
-              <div className="absolute inset-4 rounded-full border-8 border-emerald-350"></div>
+              <div className="absolute inset-4 rounded-full border-8 border-red-400"></div>
               <div 
                 className="absolute inset-0 rounded-full border-6 border-emerald-700"
                 style={{
@@ -180,8 +206,8 @@ export function GameBoard() {
                 }}
               ></div>
               <div className="text-center">
-                <div className="text-4xl font-bold text-emerald-900">{timeLeft}</div>
-                <div className="text-sm font-medium text-emerald-700">Seconds</div>
+                <div className="text-4xl font-bold text-red-600">{timeLeft}</div>
+                <div className="text-sm font-medium text-red-600">Seconds</div>
               </div>
             </div>
 
@@ -293,7 +319,7 @@ export function GameBoard() {
           </AnimatePresence>
 
           <AnimatePresence>
-            {isGameComplete && (
+            {showCompletionMessage && (
               <motion.div
                 initial={{ opacity: 0, scale: 0.5 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -305,14 +331,29 @@ export function GameBoard() {
                   onClick={e => e.stopPropagation()}
                 >
                   <h2 className="text-3xl font-bold text-emerald-700 mb-4">
-                    Congratulations! 🎉
+                    Tabriklaymiz! 🎉
                   </h2>
                   <p className="text-xl mb-4">
-                    You've completed the alphabet game!
+                    Siz alifbo o'yinini tugatdingiz!
                   </p>
-                  <p className="text-2xl font-bold text-emerald-600">
-                    Final Score: {score}
+                  <p className="text-2xl font-bold text-emerald-600 mb-8">
+                    Yakuniy ball: {score}
                   </p>
+                  
+                  <div className="flex gap-4 justify-center">
+                    <Button
+                      onClick={handleRestartGame}
+                      className="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-3 text-lg"
+                    >
+                      Qayta o'ynash 🔄
+                    </Button>
+                    <Button
+                      onClick={() => setShowWordGame(true)}
+                      className="bg-yellow-500 hover:bg-yellow-600 text-white px-6 py-3 text-lg"
+                    >
+                      So'z tuzish o'yini ➡️
+                    </Button>
+                  </div>
                 </motion.div>
               </motion.div>
             )}

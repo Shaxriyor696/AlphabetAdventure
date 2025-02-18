@@ -20,6 +20,7 @@ export function WordFormationGame({ onBackToImages }: { onBackToImages: () => vo
   const [mascotState, setMascotState] = useState<'neutral' | 'correct' | 'incorrect'>('neutral');
   const [showAnimal, setShowAnimal] = useState<{ image: string; word: string } | null>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const [showError, setShowError] = useState(false);
 
   useEffect(() => {
     audioRef.current = new Audio('/audio/alphabet.mp3');
@@ -54,7 +55,14 @@ export function WordFormationGame({ onBackToImages }: { onBackToImages: () => vo
   const checkWord = () => {
     if (currentWord.length < 3) {
       setMascotState('incorrect');
-      setTimeout(() => setMascotState('neutral'), 2000);
+      setShowError(true);
+      setTimeout(() => {
+        setShowError(false);
+        setMascotState('neutral');
+      }, 2000);
+      // Reset letters to original state
+      setLetters(prev => prev.map(l => ({ ...l, useCount: 0 })));
+      setCurrentWord('');
       return;
     }
 
@@ -84,16 +92,23 @@ export function WordFormationGame({ onBackToImages }: { onBackToImages: () => vo
             audio.addEventListener('timeupdate', stopAudio);
           }
         }
-        setTimeout(() => setShowAnimal(null), 3000);
+        setTimeout(() => setShowAnimal(null), 5000);
       }
 
-      // Don't reset letters to allow reuse
+      // Reset letters to original state after successful word
+      setLetters(prev => prev.map(l => ({ ...l, useCount: 0 })));
       setCurrentWord('');
     } else {
       setMascotState('incorrect');
+      setShowError(true);
+      setTimeout(() => {
+        setShowError(false);
+        setMascotState('neutral');
+      }, 2000);
+      // Reset letters to original state after incorrect word
+      setLetters(prev => prev.map(l => ({ ...l, useCount: 0 })));
+      setCurrentWord('');
     }
-    
-    setTimeout(() => setMascotState('neutral'), 2000);
   };
 
   const resetSelection = () => {
@@ -165,6 +180,18 @@ export function WordFormationGame({ onBackToImages }: { onBackToImages: () => vo
           <p className="text-4xl font-bold text-emerald-900 min-h-[60px]">
             {currentWord || 'Select letters to form a word'}
           </p>
+          <AnimatePresence>
+            {showError && (
+              <motion.p
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                className="text-red-500 font-semibold mt-2"
+              >
+                Noto'g'ri so'z! Qayta urinib ko'ring ☹️
+              </motion.p>
+            )}
+          </AnimatePresence>
         </div>
 
         {/* Letter Grid */}
@@ -195,17 +222,17 @@ export function WordFormationGame({ onBackToImages }: { onBackToImages: () => vo
         <div className="flex justify-center gap-4 mb-8">
           <Button
             onClick={checkWord}
-            className="bg-emerald-500 hover:bg-emerald-500 text-white"
+            className="bg-emerald-600 hover:bg-emerald-700 text-white px-1 py-1 text-xl font-semibold rounded-xl transition-all duration-200"
             disabled={currentWord.length === 0}
           >
-            Check Word
+            So'zni tekshirish ✓
           </Button>
           <Button
             onClick={resetSelection}
-            variant="outline"
+            className="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-4 text-xl font-semibold rounded-xl transition-all duration-200"
             disabled={currentWord.length === 0}
           >
-            Reset Selection
+            Qayta tanlash 🔄
           </Button>
         </div>
 

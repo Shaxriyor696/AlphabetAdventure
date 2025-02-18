@@ -23,7 +23,7 @@ export function ImageTarget({ item, onCorrectDrop, onIncorrectDrop, isCompleted 
       if (draggedItem.letter === item.letter) {
         onCorrectDrop(item.letter);
         setIsEnlarged(true);
-        setTimeout(() => setIsEnlarged(false), 3000);
+        setTimeout(() => setIsEnlarged(false), 5000);
       } else {
         onIncorrectDrop();
       }
