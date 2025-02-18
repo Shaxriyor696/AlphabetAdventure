@@ -13,13 +13,13 @@ export default defineConfig({
   base: "/AlphabetAdventure/",
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "client", "src"),
+      "@": path.resolve(__dirname, "./src"),
       "@shared": path.resolve(__dirname, "shared"),
     },
   },
   root: path.resolve(__dirname, "client"),
   build: {
-    outDir: "dist",
+    outDir: "../dist",
     emptyOutDir: true,
   },
 });
