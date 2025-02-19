@@ -10,13 +10,14 @@ const __dirname = dirname(__filename);
 
 export default defineConfig({
   plugins: [react(), runtimeErrorOverlay(), themePlugin()],
+  base: '/AlphabetAdventure/',
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src')
     }
   },
   build: {
-    outDir: '../dist',
+    outDir: 'dist',
     emptyOutDir: true
   }
 });
