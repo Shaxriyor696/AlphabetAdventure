@@ -51,7 +51,7 @@ export function ImageTarget({ item, onCorrectDrop, onIncorrectDrop, isCompleted 
         onClick={handleClick}
       >
         <img
-          src={item.image}
+          src={`/AlphabetAdventure/${item.image}`}
           alt={item.word}
           className="w-32 h-32 object-cover rounded-lg"
         />
@@ -72,7 +72,7 @@ export function ImageTarget({ item, onCorrectDrop, onIncorrectDrop, isCompleted 
               onClick={e => e.stopPropagation()}
             >
               <img
-                src={item.image}
+                src={`/AlphabetAdventure/${item.image}`}
                 alt={item.word}
                 className="w-full max-h-[70vh] object-contain rounded-lg"
               />

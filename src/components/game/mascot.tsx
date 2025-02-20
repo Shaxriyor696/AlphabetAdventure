@@ -17,7 +17,7 @@ export function Mascot({ state }: MascotProps) {
   return (
     <div className="relative">
       <img 
-        src="/images/mascot/ibratjon.jpg" 
+        src="/AlphabetAdventure/images/mascot/ibratjon.jpg" 
         alt="Friendly ibratjon"
         className={`w-40 h-25`}
       />

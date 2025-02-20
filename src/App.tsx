@@ -4,8 +4,6 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import NotFound from "@/pages/not-found";
 import AlphabetGame from "@/pages";
-import viteConfig from "vite.config";
-
 
 function Router() {
   return (

@@ -23,7 +23,7 @@ export function WordFormationGame({ onBackToImages }: { onBackToImages: () => vo
   const [showError, setShowError] = useState(false);
 
   useEffect(() => {
-    audioRef.current = new Audio('/audio/alphabet.mp3');
+    audioRef.current = new Audio('/AlphabetAdventure/audio/alphabet.mp3');
   }, []);
 
   // Initialize letters

@@ -1,35 +1,30 @@
-import { useDrag } from 'react-dnd';
-import { Card } from "@/components/ui/card";
+import React from 'react';
 
 interface LetterCardProps {
   letter: string;
-  isCompleted: boolean;
+  isCompleted?: boolean;
+  onClick?: () => void;
 }
 
-export function LetterCard({ letter, isCompleted }: LetterCardProps) {
-  const [{ isDragging }, drag] = useDrag(() => ({
-    type: 'letter',
-    item: { letter },
-    collect: (monitor) => ({
-      isDragging: monitor.isDragging(),
-    }),
-  }));
-
-  if (isCompleted) {
-    return null;
-  }
-
+const LetterCard: React.FC<LetterCardProps> = ({ letter, isCompleted = false, onClick }) => {
   return (
-    <Card
-      ref={drag}
-      className={`w-20 h-20 flex items-center justify-center text-3xl font-bold cursor-move
-        ${isDragging ? 'opacity-30 scale-110' : 'opacity-100'}
-        bg-white text-emerald-700
-        shadow-md
-        transform transition-all duration-200 ease-in-out
-        hover:scale-105 hover:bg-emerald-50 active:scale-95`}
+    <div 
+      className={`
+        w-24 h-24
+        flex items-center justify-center 
+        border-4 border-emerald-600  // Made border thicker and slightly lighter
+        rounded-[20px]  // Using direct pixel value instead of CSS variable
+        bg-emerald-50  // Light green background instead of white
+        shadow-lg hover:shadow-xl  // Bigger shadow and hover effect
+        text-5xl font-bold text-emerald-600  // Larger text and matching color
+        ${isCompleted ? 'opacity-50' : 'hover:bg-emerald-100 hover:scale-105 cursor-pointer'}
+        transition-all duration-200
+      `}
+      onClick={onClick}
     >
       {letter}
-    </Card>
+    </div>
   );
-}
+};
+
+export default LetterCard; 

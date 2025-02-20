@@ -10,7 +10,7 @@ export const alphabetData: AlphabetItem[] = [
   {
     letter: "A",
     word: "Alligator",
-    image: "/images/alphabet/alligator1.jpg",
+    image: "images/alphabet/alligator1.jpg",
     audioStart: 0,
     audioEnd: 3,
   },
