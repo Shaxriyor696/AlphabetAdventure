@@ -167,62 +167,72 @@ export function GameBoard() {
 
   return (
     <DndProvider backend={isMobile ? TouchBackend : HTML5Backend}>
-      <div className="min-h-screen bg-gradient-to-b from-emerald-100 to-emerald-250 p-6">
+      <div className="min-h-screen bg-[#CDFADB] p-6">
         <div className="max-w-4xl mx-auto">
           <div className="flex justify-end mb-2">
             <Button
               onClick={handleSkipToWords}
               variant="outline"
-              className="text-emerald-700"
+              className="bg-emerald-500 hover:bg-emerald-600 text-white px-6 py-3 rounded-lg font-bold transition-colors duration-200 flex items-center gap-2"
             >
-              So'z tuzish o'yiniga o'tish →
+              So'z tuzish o'yiniga o'tish
+              <svg 
+                xmlns="http://www.w3.org/2000/svg" 
+                width="20" 
+                height="20" 
+                viewBox="0 0 24 24" 
+                fill="none" 
+                stroke="yellow" 
+                strokeWidth="2" 
+                strokeLinecap="round" 
+                strokeLinejoin="round"
+              >
+                <path d="M5 12h14"/>
+                <path d="m12 5 7 7-7 7"/>
+              </svg>
             </Button>
           </div>
-          <div className="flex justify-between items-center mb-10">
-            {/* Score Circle */}
-            <div className="relative w-32 h-32 flex items-center justify-center">
-              <div className="absolute inset-0 rounded-full border-8 border-emerald-200"></div>
-              <div 
-                className="absolute inset-0 rounded-full border-8 border-emerald-500"
-                style={{
-                  clipPath: `polygon(0 0, 100% 0, 100% 100%, 0 100%)`,
-                  transform: `rotate(-90deg)`,
-                }}
-              ></div>
-              <div className="text-center">
-                <div className="text-4xl font-bold text-emerald-900">{score}</div>
-                <div className="text-sm font-medium text-emerald-700">Ballar</div>
+          <div className="flex  justify-between items-center mb-10">
+            {/* Score Rectangle */}
+            <div className="relative w-20 h-16">
+              <div className="absolute inset-0 border-4 border-emerald-400 bg-emerald-50 rounded-lg flex items-center justify-center">
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-emerald-900">{score}</div>
+                  <div className="text-sm font-medium text-emerald-800">Ballar</div>
+                </div>
               </div>
             </div>
 
-            {/* Timer Circle */}
-            <div className="relative w-32 h-32 flex items-center justify-center">
-              <div className="absolute inset-4 rounded-full border-8 border-red-400"></div>
-              <div 
-                className="absolute inset-0 rounded-full border-6 border-emerald-700"
-                style={{
-                  clipPath: `polygon(0 0, ${(timeLeft / 25) * 100}% 0, ${(timeLeft / 25) * 100}% 100%, 0 100%)`,
-                  transform: `rotate(-90deg)`,
-                }}
-              ></div>
-              <div className="text-center">
-                <div className="text-4xl font-bold text-red-600">{timeLeft}</div>
+            {/* Timer Rectangle */}
+            <div className="relative w-20 h-16 flex items-center justify-center">
+              <div className="absolute inset-0 border-4 border-red-400 bg-red-50 rounded-lg"></div>
+              <div className="absolute inset-2 flex gap-1">
+                {[...Array(0)].map((_, i) => (
+                  <div
+                    key={i}
+                    className={`flex-1 rounded-md ${i * 2.5 <= timeLeft ? 'bg-red-400' : 'bg-transparent'}`}
+                  />
+                ))}
+              </div>
+              <div className="relative text-center">
+                <div className="text-2xl font-bold text-red-600">{timeLeft}</div>
                 <div className="text-sm font-medium text-red-600">Seconds</div>
               </div>
             </div>
 
-            {/* Progress Circle */}
-            <div className="relative w-32 h-32 flex items-center justify-center">
-              <div className="absolute inset-0 rounded-full border-8 border-emerald-200"></div>
-              <div 
-                className="absolute inset-0 rounded-full border-8 border-emerald-500"
-                style={{
-                  clipPath: `polygon(0 0, ${progress}% 0, ${progress}% 100%, 0 100%)`,
-                  transform: `rotate(-90deg)`,
-                }}
-              ></div>
-              <div className="text-center">
-                <div className="text-4xl font-bold text-emerald-900">
+            {/* Progress Rectangle */}
+            <div className="relative w-20 h-16 flex items-center justify-center">
+              <div className="absolute inset-0 border-4 border-emerald-400 bg-emerald-150 rounded-lg"></div>
+              <div className="absolute inset-2 flex gap-1">
+                {[...Array(10)].map((_, i) => (
+                  <div
+                    key={i}
+                    className={`flex-1 rounded-md ${i * 10 <= progress ? 'bg-yellow-0' : 'bg-transparent'}`}
+                  />
+                ))}
+              </div>
+              <div className="relative text-center">
+                <div className="text-2xl font-bold text-emerald-900">
                   {Math.round(progress)}%
                 </div>
                 <div className="text-sm font-medium text-emerald-700">Progress</div>
@@ -252,31 +262,29 @@ export function GameBoard() {
             ))}
           </div>
 
-          <div className="flex justify-center gap-2 mb-8">
+          <div className="flex justify-center gap-4 mb-2">
             <Button
               onClick={() => setCurrentPage(p => Math.max(0, p - 1))}
               disabled={currentPage === 0}
-              variant="outline"
-              className="px-6 py-3 text-lg font-medium"
+              className="bg-yellow-300 border-2 border-emerald-500 hover:bg-emerald-50 disabled:opacity-50 disabled:hover:bg-yellow-300 text-emerald-600 px-8 py-3 rounded-xl font-bold transition-all duration-200 flex items-center gap-3 shadow-sm"
             >
-              <ChevronLeft className="h-5 w-5 mr-2" />
+              <ChevronLeft className="h-6 w-6" />
               Ortga
             </Button>
             <Button
               onClick={() => setCurrentPage(p => Math.min(totalPages - 1, p + 1))}
               disabled={currentPage === totalPages - 1}
-              variant="outline"
-              className="px-6 py-3 text-lg font-medium"
+              className="bg-yellow-300 border-2 border-emerald-500 hover:bg-emerald-50 disabled:opacity-50 disabled:hover:bg-yellow-300 text-emerald-600 px-6 py-3 rounded-xl font-bold transition-all duration-200 flex items-center gap-3 shadow-sm"
             >
               Oldinga
-              <ChevronRight className="h-5 w-5 ml-2" />
+              <ChevronRight className="h-6 w-6" />
             </Button>
           </div>
 
-          <div className="flex items-center justify-center gap-8">
+          <div className="flex items-center justify-center gap-4">
             <Mascot state={mascotState} />
             <p className="text-2xl font-bold text-emerald-1000">
-            KIDS Englishga xush kelibsiz!
+            Welcome to Kids Fun Land🏆
             </p>
           </div>
 

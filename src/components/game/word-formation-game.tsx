@@ -72,7 +72,7 @@ export function WordFormationGame({ onBackToImages }: { onBackToImages: () => vo
     );
 
     if ((isValidWord || matchingAnimal) && !foundWords.has(currentWord)) {
-      setScore(prev => prev + (currentWord.length * 10));
+      setScore(prev => prev + 1);
       setFoundWords(prev => new Set(Array.from(prev).concat(currentWord)));
       setMascotState('correct');
 
@@ -121,25 +121,40 @@ export function WordFormationGame({ onBackToImages }: { onBackToImages: () => vo
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-emerald-100 to-emerald-250 p-4">
+    <div className="min-h-screen bg-[#F5DD61] from-emerald-100 to-emerald-200 p-2">
+
       <div className="max-w-2xl mx-auto">
         <div className="flex justify-between items-center mb-4">
-          <Button
+          
+          <Button 
             onClick={onBackToImages}
             variant="outline"
-            className="flex items-center gap-1"
+            className="bg-emerald-500 hover:bg-emerald-500 text-white px-3 py-3 rounded-lg font-bold transition-colors duration-200 flex items-center gap-2"
           >
-            <ChevronLeft className="h-4 w-4" />
+            <ChevronLeft className="h4 w-4" />
             Rasmlar o'yiniga qaytish
+            <svg 
+                
+                width="25" 
+                height="25" 
+              
+                fill="none" 
+                stroke="red" 
+                strokeWidth="4" 
+                strokeLinecap="round" 
+                strokeLinejoin="round"
+              >
+              
+              </svg>
           </Button>
 
           {/* Score and Found Words Circles */}
           <div className="flex gap-1">
             {/* Score Circle */}
-            <div className="relative w-20 h-20 flex items-center justify-center">
-              <div className="absolute inset-0 rounded-full border-8 border-emerald-200"></div>
+            <div className="relative w-16 h-16 flex items-center justify-center">
+              <div className="absolute inset-0 border-4 border-red-500  rounded-lg"></div>
               <div 
-                className="absolute inset-0 rounded-full border-8 border-emerald-500"
+                className="absolute inset-0 rounded-full border-0"
                 style={{
                   clipPath: `polygon(0 0, 100% 0, 100% 100%, 0 100%)`,
                   transform: `rotate(-90deg)`,
@@ -152,10 +167,10 @@ export function WordFormationGame({ onBackToImages }: { onBackToImages: () => vo
             </div>
 
             {/* Found Words Circle */}
-            <div className="relative w-20 h-20 flex items-center justify-center">
-              <div className="absolute inset-0 rounded-full border-8 border-emerald-300"></div>
+            <div className="relative w-16 h-16 flex items-center justify-center">
+            <div className="absolute inset-0 border-4 border-green-500  rounded-lg"></div>
               <div 
-                className="absolute inset-0 rounded-full border-8 border-emerald-500"
+                className="absolute inset-0 rounded-full border-0"
                 style={{
                   clipPath: `polygon(0 0, 100% 0, 100% 100%, 0 100%)`,
                   transform: `rotate(-90deg)`,
@@ -195,22 +210,22 @@ export function WordFormationGame({ onBackToImages }: { onBackToImages: () => vo
         </div>
 
         {/* Letter Grid */}
-        <div className="grid grid-cols-7 gap-4 mb-9 justify-center">
+        <div className="grid grid-cols-6 gap-4 mb-4 justify-center">
           {letters.map((letter) => (
             <motion.button
               key={letter.id}
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
-              className={`w-12 h-12 rounded-lg text-2xl font-bold relative
+              className={`w-14 h-10 rounded-lg text-3xl font-bold relative
                 ${letter.useCount > 0 
-                  ? 'bg-emerald-500 text-white'
+                  ? 'bg-emerald-500 text-red-500'
                   : 'bg-white text-emerald-900'
                 } shadow-md transition-colors`}
               onClick={() => handleLetterClick(letter)}
             >
               {letter.char}
               {letter.useCount > 1 && (
-                <span className="absolute -top-1 -right-1 bg-yellow-400 text-xs w-5 h-5 rounded-full flex items-center justify-center">
+                <span className="absolute -top-1 -right-5 bg-yellow-400 text-xs w-5 h-5 rounded-full flex items-center justify-center">
                   {letter.useCount}
                 </span>
               )}
@@ -237,7 +252,7 @@ export function WordFormationGame({ onBackToImages }: { onBackToImages: () => vo
         </div>
 
         {/* Found Words List with categories */}
-        <div className="bg-white rounded-lg p-6 mb-8">
+        <div className="bg-yellow-500 rounded-lg p-6 mb-8">
           <h3 className="text-xl font-bold text-emerald-900 mb-4">
             Topilgan so'zlar:
           </h3>
