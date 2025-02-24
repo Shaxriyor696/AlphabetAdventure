@@ -44,7 +44,7 @@ export function ImageTarget({ item, onCorrectDrop, onIncorrectDrop, isCompleted 
       <div
         ref={drop}
         className={cn(
-          "relative rounded-lg overflow-hidden cursor-pointer transition-all duration-200",
+          "relative rounded-lg overflow-hidden cursor-pointer transition-all duration-400",
           isOver && "ring-2 ring-emerald-400",
           isCompleted && "ring-2 ring-emerald-500"
         )}

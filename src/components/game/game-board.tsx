@@ -162,6 +162,16 @@ export function GameBoard() {
     setIsTimerActive(true);
   };
 
+  const handleReturnToMenu = () => {
+    setIsGameStarted(false);
+    // Reset any necessary game state
+    setCompletedLetters(new Set());
+    setScore(0);
+    setCurrentPage(0);
+    setTimeLeft(25);
+    setIsTimerActive(true);
+  };
+
   if (!isGameStarted) {
     return (
       <div className="min-h-screen bg-[#CDFADB] flex items-center justify-center">
@@ -171,7 +181,7 @@ export function GameBoard() {
           <div className="mb-2">
             <div className="relative w-full pt-[56.25%]">
               <iframe 
-                className="absolute top-[-180px] left-0 w-full h-full rounded-xl shadow-lg"
+                className="absolute top-[-140px] left-0 w-full h-full rounded-xl shadow-lg"
                 src="https://www.youtube.com/embed/75-1YsGiUC8?si=p-gMSxYNVKg_jOp5" 
                 title="YouTube video player" 
                 frameBorder="0" 
@@ -183,7 +193,7 @@ export function GameBoard() {
           </div>
 
           {/* Audio Section */}
-          <div className="mb-6 -mt-4">
+          <div className="mb-2 -mt-4">
             <audio 
               controls
               className="w-full mb-2 rounded-lg"
@@ -235,11 +245,33 @@ export function GameBoard() {
     <DndProvider backend={isMobile ? TouchBackend : HTML5Backend}>
       <div className="min-h-screen bg-[#CDFADB] p-6">
         <div className="max-w-4xl mx-auto">
-          <div className="flex justify-end mb-2">
+          <div className="flex justify-between mb-4">
+            <Button
+              onClick={handleReturnToMenu}
+              variant="outline"
+              className="bg-yellow-300 border-4 border-emerald-500 hover:bg-emerald-50 text-emerald-600 px-1 py-3 rounded-xl font-bold transition-all duration-200 flex items-center gap-2"
+            >
+              <svg 
+                xmlns="http://www.w3.org/2000/svg" 
+                width="20" 
+                height="20" 
+                viewBox="0 0 24 24" 
+                fill="none" 
+                stroke="currentColor" 
+                strokeWidth="2" 
+                strokeLinecap="round" 
+                strokeLinejoin="round"
+              >
+                <path d="m12 19-7-7 7-7"/>
+                <path d="M19 12H5"/>
+              </svg>
+              Asosiy menyu
+            </Button>
+            
             <Button
               onClick={handleSkipToWords}
               variant="outline"
-              className="bg-emerald-500 hover:bg-emerald-600 text-white px-6 py-3 rounded-lg font-bold transition-colors duration-200 flex items-center gap-2"
+              className="bg-yellow-300 border-4 border-emerald-500 hover:bg-emerald-50 text-emerald-600 px-1 py-3 rounded-xl font-bold transition-all duration-200 flex items-center gap-2"
             >
               So'z tuzish o'yiniga o'tish
               <svg 
@@ -248,7 +280,7 @@ export function GameBoard() {
                 height="20" 
                 viewBox="0 0 24 24" 
                 fill="none" 
-                stroke="yellow" 
+                stroke="green" 
                 strokeWidth="2" 
                 strokeLinecap="round" 
                 strokeLinejoin="round"
@@ -306,7 +338,7 @@ export function GameBoard() {
             </div>
           </div>
 
-          <div className="flex justify-center gap-4 mb-6">
+          <div className="flex justify-center gap-4 mb-2">
             {currentItems.map((item) => (
               <ImageTarget
                 key={item.letter}
@@ -318,7 +350,7 @@ export function GameBoard() {
             ))}
           </div>
 
-          <div className="flex justify-center gap-6 mb-8">
+          <div className="flex justify-center gap-8 mb-8">
             {currentItems.map((item) => (
               <LetterCard 
                 key={item.letter}
@@ -334,7 +366,7 @@ export function GameBoard() {
               disabled={currentPage === 0}
               className="bg-yellow-300 border-2 border-emerald-500 hover:bg-emerald-50 disabled:opacity-50 disabled:hover:bg-yellow-300 text-emerald-600 px-8 py-3 rounded-xl font-bold transition-all duration-200 flex items-center gap-3 shadow-sm"
             >
-              <ChevronLeft className="h-6 w-6" />
+              <ChevronLeft className="h-3 w-3" />
               Ortga
             </Button>
             <Button
@@ -347,7 +379,7 @@ export function GameBoard() {
             </Button>
           </div>
 
-          <div className="flex items-center justify-center gap-4">
+          <div className="flex items-center justify-center gap-16">
             <Mascot state={mascotState} />
             <p className="text-2xl font-bold text-emerald-1000">
             Welcome to Kids Fun Land🏆
@@ -398,7 +430,7 @@ export function GameBoard() {
                 initial={{ opacity: 0, scale: 0.5 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.5 }}
-                className="fixed inset-0 bg-emerald-500 bg-opacity-50 flex items-center justify-center z-50"
+                className="fixed inset-10 bg-emerald-500 bg-opacity-50 flex items-center justify-center z-50"
               >
                 <motion.div
                   className="bg-white p-8 rounded-xl max-w-md text-center"
