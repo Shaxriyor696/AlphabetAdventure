@@ -172,6 +172,30 @@ export function GameBoard() {
     setIsTimerActive(true);
   };
 
+  // Add this shuffle function near the top of your component
+  const shuffleArray = <T,>(array: T[]): T[] => {
+    const shuffled = [...array];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    return shuffled;
+  };
+
+  const [shuffledItems, setShuffledItems] = useState(alphabetData.slice(currentPage * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE + ITEMS_PER_PAGE));
+
+  useEffect(() => {
+    if (!isTimerActive) return;
+
+    setShuffledItems(shuffleArray(alphabetData.slice(currentPage * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE + ITEMS_PER_PAGE)));
+
+    const shuffleTimer = setInterval(() => {
+      setShuffledItems(prevItems => shuffleArray([...prevItems]));
+    }, 3000);
+
+    return () => clearInterval(shuffleTimer);
+  }, [currentPage, isTimerActive]);
+
   if (!isGameStarted) {
     return (
       <div className="min-h-screen bg-[#CDFADB] flex items-center justify-center">
@@ -350,8 +374,8 @@ export function GameBoard() {
             ))}
           </div>
 
-          <div className="flex justify-center gap-8 mb-8">
-            {currentItems.map((item) => (
+          <div className="flex justify-center gap-4 sm:gap-8 mb-4 sm:mb-8">
+            {shuffledItems.map((item) => (
               <LetterCard 
                 key={item.letter}
                 letter={item.letter}

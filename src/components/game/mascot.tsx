@@ -22,7 +22,7 @@ export function Mascot({ state }: MascotProps) {
         className={`w-40 h-25`}
       />
       <div className="absolute -bottom-8 right-1 transform translate-x-2/3">
-        <div className="bg-wood rounded-lg shadow-lg p-2 relative border-4 border-yellow-500 min-w-[250px]">
+        <div className="bg-wood rounded-lg shadow-lg p-2 relative border-2 border-yellow-500 min-w-[250px]">
           {state === 'neutral' && (
             <p className="text-sm font-bold text-green-500">To'g'ri topishga harakat qiling!</p>
           )}
