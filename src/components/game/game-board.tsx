@@ -379,10 +379,12 @@ export function GameBoard() {
             </Button>
           </div>
 
-          <div className="flex items-center justify-center gap-28">
-            <Mascot state={mascotState} />
-            <p className="text-2xl font-bold text-emerald-1000">
-            Welcome to Kids Fun Land🏆
+          <div className="flex items-center justify-center gap-4">
+            <div className="w-24 h-32 sm:w-32 sm:h-32">
+              <Mascot state={mascotState} />
+            </div>
+            <p className="text-2xl font-bold text-emerald-1000 -ml-2">
+              Welcome to Kids Fun Land🏆
             </p>
           </div>
 

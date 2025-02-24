@@ -21,7 +21,7 @@ export function Mascot({ state }: MascotProps) {
         alt="Friendly ibratjon"
         className={`w-40 h-25`}
       />
-      <div className="absolute -bottom-8 right-6 transform translate-x-2/3">
+      <div className="absolute -bottom-8 right-1 transform translate-x-2/3">
         <div className="bg-wood rounded-lg shadow-lg p-2 relative border-4 border-yellow-500 min-w-[250px]">
           {state === 'neutral' && (
             <p className="text-sm font-bold text-green-500">To'g'ri topishga harakat qiling!</p>
@@ -33,7 +33,7 @@ export function Mascot({ state }: MascotProps) {
             </div>
           )}
           {state === 'incorrect' && (
-            <div className="flex items-center gap-1 text-red-600">
+            <div className="flex items-center gap-4 text-red-600">
               <X className="w-4 h-4" />
               <p className="text-sm font-bold">Qayta urinib ko'ring!</p>
             </div>
