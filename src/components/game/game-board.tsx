@@ -24,6 +24,7 @@ export function GameBoard() {
   const timerRef = useRef<NodeJS.Timeout>();
   const [showWordGame, setShowWordGame] = useState(false);
   const [showCompletionMessage, setShowCompletionMessage] = useState(false);
+  const [isGameStarted, setIsGameStarted] = useState(false);
 
   useEffect(() => {
     audioRef.current = new Audio('/AlphabetAdventure/audio/alphabet.mp3');
@@ -160,6 +161,71 @@ export function GameBoard() {
     setTimeLeft(25);
     setIsTimerActive(true);
   };
+
+  if (!isGameStarted) {
+    return (
+      <div className="min-h-screen bg-[#CDFADB] flex items-center justify-center">
+        <div className="text-center max-w-2xl w-full px-4">
+          
+          {/* Video Section */}
+          <div className="mb-2">
+            <div className="relative w-full pt-[56.25%]">
+              <iframe 
+                className="absolute top-[-180px] left-0 w-full h-full rounded-xl shadow-lg"
+                src="https://www.youtube.com/embed/75-1YsGiUC8?si=p-gMSxYNVKg_jOp5" 
+                title="YouTube video player" 
+                frameBorder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                referrerPolicy="strict-origin-when-cross-origin" 
+                allowFullScreen
+              />
+            </div>
+          </div>
+
+          {/* Audio Section */}
+          <div className="mb-6 -mt-4">
+            <audio 
+              controls
+              className="w-full mb-2 rounded-lg"
+              src="/AlphabetAdventure/audio/alphabet.mp3"
+            >
+              Your browser does not support the audio element.
+            </audio>
+            <p className="text-lg font-medium text-emerald-700">
+              Alphabet Audio
+            </p>
+          </div>
+
+          {/* Topic Title */}
+          <h2 className="text-2xl font-semibold text-emerald-700 mb-10">
+            Alphabet Topic
+          </h2>
+
+          {/* Enter Game Button */}
+          <button
+            onClick={() => setIsGameStarted(true)}
+            className="bg-emerald-500 hover:bg-emerald-600 text-white px-8 py-4 rounded-2xl font-bold text-xl transition-all duration-200 transform hover:scale-105 shadow-lg flex items-center gap-2"
+          >
+            O'yinga kirish
+            <svg 
+              xmlns="http://www.w3.org/2000/svg" 
+              width="24" 
+              height="24" 
+              viewBox="0 0 24 24" 
+              fill="none" 
+              stroke="currentColor" 
+              strokeWidth="2" 
+              strokeLinecap="round" 
+              strokeLinejoin="round"
+            >
+              <path d="M5 12h14"/>
+              <path d="m12 5 7 7-7 7"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   if (showWordGame) {
     return <WordFormationGame onBackToImages={() => setShowWordGame(false)} />;
