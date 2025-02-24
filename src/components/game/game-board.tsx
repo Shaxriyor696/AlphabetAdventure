@@ -379,7 +379,7 @@ export function GameBoard() {
             </Button>
           </div>
 
-          <div className="flex items-center justify-center gap-20">
+          <div className="flex items-center justify-center gap-28">
             <Mascot state={mascotState} />
             <p className="text-2xl font-bold text-emerald-1000">
             Welcome to Kids Fun Land🏆
