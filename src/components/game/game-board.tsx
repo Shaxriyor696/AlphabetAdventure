@@ -198,14 +198,14 @@ export function GameBoard() {
 
   if (!isGameStarted) {
     return (
-      <div className="min-h-screen bg-[#CDFADB] flex items-center justify-center">
+      <div className="min-h-screen bg-[#CDFADB] flex items-center justify-center ">
         <div className="text-center max-w-2xl w-full px-4">
           
           {/* Video Section */}
-          <div className="mb-2">
+          <div className="mb-2 mt-8">
             <div className="relative w-full pt-[56.25%]">
               <iframe 
-                className="absolute top-[-140px] left-0 w-full h-full rounded-xl shadow-lg"
+                className="absolute top-[-240px] left-0 w-full h-full rounded-xl shadow-lg mt-28"
                 src="https://www.youtube.com/embed/75-1YsGiUC8?si=p-gMSxYNVKg_jOp5" 
                 title="YouTube video player" 
                 frameBorder="0" 
@@ -216,8 +216,15 @@ export function GameBoard() {
             </div>
           </div>
 
+          {/* Topic Title as a separate section below video */}
+          <div className="border-4 border-yellow-500 rounded-xl px-4 py-2 bg-white -mt-24">
+            <h2 className="text-2xl font-semibold text-emerald-700 text-center">
+              Alphabet Topic
+            </h2>
+          </div>
+
           {/* Audio Section */}
-          <div className="mb-2 -mt-12">
+          <div className="relative mb-6">
             <audio 
               controls
               className="w-full mb-2 rounded-lg"
@@ -225,20 +232,17 @@ export function GameBoard() {
             >
               Your browser does not support the audio element.
             </audio>
-            <p className="text-lg font-medium text-emerald-700">
-              Alphabet Audio
-            </p>
+            <div className="border-4 border-yellow-500 rounded-xl px-4 py-2 bg-white">
+              <p className="text-2xl font-bold text-yellow-600 text-center">
+                Alphabet Audio
+              </p>
+            </div>
           </div>
-
-          {/* Topic Title */}
-          <h2 className="text-2xl font-semibold text-emerald-700 mb-10">
-            Alphabet Topic
-          </h2>
 
           {/* Enter Game Button */}
           <button
             onClick={() => setIsGameStarted(true)}
-            className="bg-emerald-500 hover:bg-emerald-600 text-white px-8 py-4 rounded-2xl font-bold text-xl transition-all duration-200 transform hover:scale-105 shadow-lg flex items-center gap-2"
+            className="bg-emerald-500 hover:bg-emerald-600 text-white px-8 py-4 rounded-2xl font-bold text-xl transition-all duration-200 transform hover:scale-105 shadow-lg flex items-center gap-2 mt-8 "
           >
             O'yinga kirish
             <svg 
