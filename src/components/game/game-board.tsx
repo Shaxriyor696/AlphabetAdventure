@@ -217,7 +217,7 @@ export function GameBoard() {
           </div>
 
           {/* Audio Section */}
-          <div className="mb-2 -mt-4">
+          <div className="mb-2 -mt-12">
             <audio 
               controls
               className="w-full mb-2 rounded-lg"
@@ -247,7 +247,7 @@ export function GameBoard() {
               height="24" 
               viewBox="0 0 24 24" 
               fill="none" 
-              stroke="currentColor" 
+              stroke="yellow" 
               strokeWidth="2" 
               strokeLinecap="round" 
               strokeLinejoin="round"
@@ -408,7 +408,7 @@ export function GameBoard() {
               <Mascot state={mascotState} />
             </div>
             <p className="text-2xl font-bold text-emerald-1000 -ml-2">
-              Welcome to Kids Fun Land🏆
+              
             </p>
           </div>
 

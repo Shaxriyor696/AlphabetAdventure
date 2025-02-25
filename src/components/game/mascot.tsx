@@ -19,16 +19,16 @@ export function Mascot({ state }: MascotProps) {
       <img 
         src="/AlphabetAdventure/images/mascot/ibratjon.jpg" 
         alt="Friendly ibratjon"
-        className={`w-40 h-25`}
+        className={`w-40 h-25 -ml-32`}
       />
-      <div className="absolute -bottom-8 right-1 transform translate-x-2/3">
-        <div className="bg-wood rounded-lg shadow-lg p-2 relative border-2 border-yellow-500 min-w-[250px]">
+      <div className="absolute right-32 transform translate-x-2/3 -mt-40 -mr-20">
+        <div className="bg-wood rounded-lg shadow-lg p-2 relative border-8 border-yellow-500 min-w-[250px]">
           {state === 'neutral' && (
-            <p className="text-sm font-bold text-green-500">To'g'ri topishga harakat qiling!</p>
+            <p className="text-sm font-bold text-blue-500">To'g'ri topishga harakat qiling!</p>
           )}
           {state === 'correct' && (
-            <div className="flex items-center gap-1 text-green-600">
-              <Check className="w-4 h-4" />
+            <div className="flex items-center gap-8 text-green-600">
+              <Check className="w-6 h-6" />
               <p className="text-sm font-bold">Barakalla!</p>
             </div>
           )}
